@@ -1,5 +1,82 @@
-// src/css/app.scss
+:root {
+    --width: 100vw;
+    --full-width: 100vw;
+    
+    @media (min-width: 42em) {
+      --width: 42rem;
+    }
+    
+    --angle: -11deg;
+    --magic-number: 0.09719;
+    --skew-padding: calc(var(--width) * var(--magic-number));
+    --clip-padding: calc(var(--full-width) * var(--magic-number));
+  }
+  
+  .diagonal-box {
+    position: relative;
+    padding: var(--skew-padding) 0;
+    margin-top: -1px;
+    
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      transform: skewy(var(--angle));
+      transform-origin: 50% 0;
+      outline: 1px solid transparent;
+      backface-visibility: hidden;
+    }
+  }
+  
+  .bg-one:before {
+    background-image: linear-gradient(45deg, #E7D37F, #FD9B63);
+  }
+  
+  .bg-two:before {
+    background-image: linear-gradient(-135deg, #E7D37F, #81A263);
+  }
+  
+  .bg-three:before {
+    background-image: linear-gradient(-135deg, #365E32, #FD9B63);
+  }
+  
+  .content {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 4.5em 0 4.5em 0;
+    position: relative;
+  }
+  .clip-path {
+    position: relative;
+    margin-top: calc( ( var(--clip-padding) * -1 ) - 2px );
+    background-image: 
+      linear-gradient(-135deg, #E7D37F, #E7D37F);
+    background-size: .5em .5em, 100% 100%;
+    padding: calc( ( var(--clip-padding) * 2 ) - ( var(--clip-padding) - var(--skew-padding) ) ) 0 4em;
+    clip-path: polygon(
+      0% calc(var(--clip-padding) * 2), 
+      100% 0%, 
+      100% 100%, 
+      0% 100% );
+    -webkit-clip-path: polygon(
+      0% calc(var(--clip-padding) * 2), 
+      100% 0%, 
+      100% 100%, 
+      0% 100% );
+  }
+  .background{
+    background-image: 
+    linear-gradient(-135deg, #f3ecce, #E7D37F);
+  }
 
-.q-splitter__separator{
-    width: 0 !important;
-}
+  .circle-image {
+    border-radius: 50% 50%;
+    width: 7%;
+  }
+  .img {
+    position: relative;
+    right: 30%;
+  }

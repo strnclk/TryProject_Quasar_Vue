@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="q-pa-md">
       <p  style="margin-left: 2%;margin-right: 2%">Lorem ipsum dolor sit amet consectetur adipisicing elit. In laborum, repellendus omnis cum doloremque eveniet optio soluta deserunt voluptatibus expedita adipisci ex, beatae ab dolore id voluptates aut explicabo. Beatae!</p>
       <div class="q-pa-md">
         <q-card class="my-card">
@@ -26,7 +26,7 @@
             <div style="margin-top:5%">
     <q-splitter
       v-model="splitterModel"
-      style="height: 450px"
+      style="height: 450px;"
     >
 
       <template v-slot:before>
@@ -48,6 +48,7 @@
           vertical
           transition-prev="jump-up"
           transition-next="jump-up"
+          style="background-color:#f3ecce;"
         >
           <q-tab-panel name="mails">
             <div class="q-px-lg q-py-md">

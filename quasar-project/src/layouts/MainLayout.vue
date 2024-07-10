@@ -1,20 +1,22 @@
 <template>
-  <div >
-    <q-layout view="hHh Lpr lff">
+  <div style="background-color:#f3ecce">
+    <q-layout view="hHh Lpr lff" >
       <q-header elevated :class="$q.dark.isActive ? 'bg-orange-13' : 'bg-orange-13'">
         <q-toolbar>
-          <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-toolbar-title>Sitran ÇELİK</q-toolbar-title>
-        </q-toolbar>
-      </q-header>
-      <q-drawer v-model="drawer" show-if-above :width="200" :breakpoint="500" bordered
-        :class="$q.dark.isActive ? 'bg-orange-11' : 'bg-orange-11'">
-        <q-scroll-area class="fit">
-          <q-list>
-
-            <template v-for="(menuItem, index) in menuList" :key="index">
-              <q-item :to="menuItem.url" clickable :active="menuItem.label === 'Outbox'" v-ripple>
-                <q-item-section avatar style="color: darkorange;">
+          <q-toolbar-title>
+            <q-img
+      src="/icons/vesika.jpg"
+      :ratio="16/15"
+      class="circle-image"
+    /> Sitran ÇELİK</q-toolbar-title>
+           <!-- Hamburger Menü İkonu (Küçük Ekranlar İçin) -->
+           <q-btn flat @click="toggleDrawer" round dense icon="menu" class="hidden-md-up" />
+           <!-- v-if="$q.screen.gt.md" -->
+<!-- Büyük Ekranlar İçin Menü Öğeleri -->
+<div class="hidden-xs-only hidden-sm-only hidden-md-only hidden-lg-up flex space-x-4 large-page">
+            <q-list class="q-pa-md menu-container" v-for="(menuItem, index) in menuList" :key="index">
+              <q-item :to="menuItem.url" clickable :active="menuItem.label === 'Outbox'" v-ripple class="menu-item">
+                <q-item-section avatar style="color: white;">
                   <q-icon :name="menuItem.icon" />
                 </q-item-section>
                 <q-item-section style="color: white;">
@@ -22,71 +24,81 @@
                 </q-item-section>
               </q-item>
               <q-separator :key="'sep' + index" v-if="menuItem.separator" />
-            </template>
+            </q-list>
+          </div>
+</q-toolbar>
+</q-header>
 
-          </q-list>
-        </q-scroll-area>
-      </q-drawer>
-
+<!-- Drawer (Küçük Ekranlar İçin) -->
+<q-drawer v-model="drawer" side="left" overlay class="bg-orange-13">
+<q-list v-for="(menuItem, index) in menuList" :key="index" >
+  <q-item :to="menuItem.url" clickable :active="menuItem.label === 'Outbox'" v-ripple class="text-white">
+    <q-item-section avatar>
+      <q-icon :name="menuItem.icon" style="color: white;" />
+    </q-item-section>
+    <q-item-section>
+      {{ menuItem.label }}
+    </q-item-section>
+  </q-item>
+  <q-separator :key="'sep' + index" v-if="menuItem.separator" />
+</q-list>
+</q-drawer>
       <q-page-container>
         <router-view />
       </q-page-container>
-
-      <q-footer class="bg-grey-8 text-white">
-        <q-toolbar>
-          <q-toolbar-title>Sitran ÇELİK</q-toolbar-title>
-        </q-toolbar>
-      </q-footer>
-
-      <!-- <q-page-container>
-        <q-page padding>
-          <p v-for="n in 15" :key="n">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          <div class="q-pa-md example-row-all-breakpoints text-center">
-            <div class="row">
-              <div class="col">.col</div>
-              <div class="col">.col</div>
-              <div class="col">.col</div>
-              <div class="col">.col</div>
-            </div>
-          </div>
-        </q-page>
-      </q-page-container> -->
     </q-layout>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-
-const menuList = [
-  {
-    icon: 'inbox',
-    label: 'Anasayfa',
-    url: '/home',
-    separator: true,
-  },
-  {
-    icon: 'arrow_forward',
-    label: 'Projelerim',
-    url: '/',
-    separator: false
-  },
-  {
-    icon: 'delete',
-    label: 'Hakkımda',
-    url: '/about',
-    separator: false
-  },
-]
-
 export default {
-  setup() {
+  data() {
     return {
-      drawer: ref(false),
-      menuList
+      drawer: false,
+      menuList: [
+        { url: '/home', label: 'Anasayfa', icon: 'home' },
+        { url: '/about', label: 'Hakkımda', icon: 'info' },
+        { url: '#contact', label: 'İletişim', icon: 'mail' },
+        { separator: true },
+      ]
+    };
+  },
+  methods: {
+    toggleDrawer() {
+      this.drawer = !this.drawer;
     }
   }
-}
+};
 </script>
+
+
+<style scoped>
+.hidden-md-up {
+  display: none;
+}
+
+@media (max-width: 799px) {
+  .hidden-md-up {
+    display: inline-block !important;
+  }
+  .large-page{
+    display:none;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+.menu-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+</style>
