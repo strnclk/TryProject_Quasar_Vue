@@ -1,6 +1,6 @@
 <template>
-    <div class="q-pa-md">
-      <p  style="margin-left: 2%;margin-right: 2%">Lorem ipsum dolor sit amet consectetur adipisicing elit. In laborum, repellendus omnis cum doloremque eveniet optio soluta deserunt voluptatibus expedita adipisci ex, beatae ab dolore id voluptates aut explicabo. Beatae!</p>
+    <div class="q-pa-md" style="font-family:Verdana, Geneva, Tahoma, sans-serif">
+      <p  style="margin-left: 2%;margin-right: 2%">Özgeçmişim ve çalışmalarıma aşağıdan ulaşabilirsiniz. Daha ayrıntılı bilgi almak, projelerimi incelemek ve profesyonel geçmişim hakkında daha fazla bilgi edinmek için LinkedIn veya GitHub hesabımı ziyaret edebilirsiniz.<br> LinkedIn profilimde kariyer yolculuğum, katıldığım projeler ve aldığım geri bildirimler hakkında detaylı bilgiler bulabilirsiniz. GitHub hesabımda ise kod örneklerim ve üzerinde çalıştığım açık kaynak projeleri keşfedebilirsiniz. </p>
       <div class="q-pa-md">
         <q-card class="my-card">
           <q-parallax
