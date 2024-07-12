@@ -78,7 +78,7 @@
 
   .circle-image {
     border-radius: 50% 50%;
-    width: 7%;
+    width: 40px;
   }
   .img {
     position: relative;
@@ -114,4 +114,14 @@
     .content{
       max-width: 100%;
     }
+    .rounded-borders{
+      display:none;
+    }
+    .icon-container{
+      width: 40px;
+    }
+  }
+  .my-card{
+    background-color: rgb(241, 200, 124);
+    border:none;
   }

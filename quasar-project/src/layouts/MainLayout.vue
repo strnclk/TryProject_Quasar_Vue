@@ -14,8 +14,10 @@
            <!-- v-if="$q.screen.gt.md" -->
 <!-- Büyük Ekranlar İçin Menü Öğeleri -->
 <div class="hidden-xs-only hidden-sm-only hidden-md-only hidden-lg-up flex space-x-4 large-page">
-            <q-list class="q-pa-md menu-container" v-for="(menuItem, index) in menuList" :key="index">
-              <q-item :to="menuItem.url" clickable :active="menuItem.label === 'Outbox'" v-ripple class="menu-item">
+            <q-list class="q-pa-md menu-container" >
+              <div v-for="(menuItem, index) in menuList" :key="index">
+
+                <q-item  :to="menuItem.url" clickable :active="menuItem.label === 'Outbox'" v-ripple class="menu-item">
                 <q-item-section avatar style="color: white;">
                   <q-icon :name="menuItem.icon" />
                 </q-item-section>
@@ -23,7 +25,17 @@
                   {{ menuItem.label }}
                 </q-item-section>
               </q-item>
-              <q-separator :key="'sep' + index" v-if="menuItem.separator" />
+              <!-- <q-separator :key="'sep' + index" v-if="menuItem.separator" /> -->
+              </div>
+              <q-item  @click="scrollToSection('contact')" clickable v-ripple class="menu-item">
+                <q-item-section avatar style="color: white;">
+                  <q-icon name="connect_without_contact"/>
+                </q-item-section>
+                <q-item-section style="color: white;">
+                  İletişim
+                </q-item-section>
+              </q-item>
+             
             </q-list>
           </div>
 </q-toolbar>
@@ -31,8 +43,9 @@
 
 <!-- Drawer (Küçük Ekranlar İçin) -->
 <q-drawer v-model="drawer" side="left" overlay class="bg-orange-13">
-<q-list v-for="(menuItem, index) in menuList" :key="index" >
-  <q-item :to="menuItem.url" clickable :active="menuItem.label === 'Outbox'" v-ripple class="text-white">
+<q-list>
+  <div  v-for="(menuItem, index) in menuList" :key="index" >
+    <q-item :to="menuItem.url" clickable :active="menuItem.label === 'Outbox'" v-ripple class="text-white">
     <q-item-section avatar>
       <q-icon :name="menuItem.icon" style="color: white;" />
     </q-item-section>
@@ -40,7 +53,16 @@
       {{ menuItem.label }}
     </q-item-section>
   </q-item>
-  <q-separator :key="'sep' + index" v-if="menuItem.separator" />
+  <!-- <q-separator :key="'sep' + index" v-if="menuItem.separator" /> -->
+  </div> 
+  <q-item  @click="scrollToSection('contact')" clickable v-ripple class="menu-item">
+                <q-item-section avatar style="color: white;">
+                  <q-icon name="connect_without_contact"/>
+                </q-item-section>
+                <q-item-section style="color: white;">
+                  İletişim
+                </q-item-section>
+              </q-item>
 </q-list>
 </q-drawer>
       <q-page-container>
@@ -56,16 +78,20 @@ export default {
     return {
       drawer: false,
       menuList: [
-        { url: '/home', label: 'Anasayfa', icon: 'home' },
-        { url: '/about', label: 'Hakkımda', icon: 'info' },
-        { url: '#contact', label: 'İletişim', icon: 'mail' },
-        { separator: true },
+        { url: '/#', label: 'Anasayfa', icon: 'home' },
+        { url: '/about', label: 'Hakkımda', icon: 'roundabout_right' },
       ]
     };
   },
   methods: {
     toggleDrawer() {
       this.drawer = !this.drawer;
+    },
+    scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
 };
