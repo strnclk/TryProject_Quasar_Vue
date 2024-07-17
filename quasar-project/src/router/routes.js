@@ -1,24 +1,80 @@
-const routes = [
+
+// Layouts
+const MainLayout = () => import('layouts/MainLayout.vue');
+const AdminLayout = () => import('layouts/AdminLayout.vue');
+
+// Pages
+const About = () => import('pages/About.vue');
+const Homepage = () => import('pages/homepage.vue');
+const Login = () => import('pages/login.vue');
+const cv = () => import('pages/admin/cv.vue');
+const feature = () => import('pages/FeaturePage.vue');
+const ErrorNotFound = () => import('pages/ErrorNotFound.vue');
+
+const routes= [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: MainLayout,
     children: [
-      { path: '/about', component: () => import('pages/About.vue') },
-      { path: '/', component: () => import('pages/homepage.vue') },
-      { path: '/#contact', component: () => import('pages/homepage.vue') },
-      { path: '/login', component: () => import('pages/login.vue') },
-
-
-
-    ]
+      { path: '', component: Homepage },
+      { path: 'about', component: About },
+      { path: 'login', component: Login },
+    ],
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
-  }
-]
+    path: '/admin',
+    component: AdminLayout,
+    children: [
+      { path: '/admin', component: cv },
+      { path: '/feature', component: feature },
 
-export default routes
+    ],
+  },
+  {
+    path: '/:catchAll(.*)',
+    component: ErrorNotFound,
+  },
+];
+
+export default routes;
+
+
+
+
+
+
+
+
+
+
+// const routes = [
+//   {
+//     path: '/',
+//     component: () => import('layouts/MainLayout.vue'),
+//     children: [
+//       { path: '/about', component: () => import('pages/About.vue') },
+//       { path: '/', component: () => import('pages/homepage.vue') },
+//       { path: '/#contact', component: () => import('pages/homepage.vue') },
+//       { path: '/login', component: () => import('pages/login.vue') },
+
+
+
+//     ]
+//   },
+//   {
+//     path: '/admin',
+//     component: () => import('layouts/AdminLayout.vue'),
+//     children: [
+//       { path: 'dashboard', component: () => import('pages/admin/Dashboard.vue') },
+//     ]
+//   },
+
+//   // Always leave this as last one,
+//   // but you can also remove it
+//   {
+//     path: '/:catchAll(.*)*',
+//     component: () => import('pages/ErrorNotFound.vue')
+//   }
+// ]
+
+// export default routes

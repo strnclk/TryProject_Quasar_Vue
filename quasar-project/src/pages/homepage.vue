@@ -5,14 +5,10 @@
   >
     <div class="content">
       <span class="text-h2 text-weight-regular" style="color: orange"
-        >Merhaba, ben Sitran Çelik</span
+        >{{name}}</span
       >
       <p class="q-pa-md" style="font-size: medium">
-        Yaratıcı projeler ve kullanıcı dostu çözümler sunan bir yazılım
-        geliştiricisiyim. Uzmanlık alanlarım arasında front-end ve back-end
-        geliştirme, kullanıcı arayüzü tasarımı ve modern web teknolojilerinin
-        kullanımı yer alıyor. Projelerimde, estetik ve işlevselliği bir araya
-        getirerek her zaman en iyi kullanıcı deneyimini sunmayı hedefliyorum.
+        {{ description }}
       </p>
     </div>
     <div class="diagonal-box bg-one">
@@ -101,6 +97,14 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
+
+const name=ref('');
+const description=ref('');
+
+// Verileri LocalStorage'a kaydet
+    
+
+
 export default {
   setup() {
      onMounted(async()=>{
@@ -108,9 +112,12 @@ export default {
      })
     const getSkillsData = async () => {
       try {
-        const response = await axios.post('http://localhost:5159/api/Profil/getfeature');
+        const response = await axios.get('http://localhost:5159/api/Admin/getfeature');
         // Verilerin API'den nasıl geldiğine bağlı olarak bu kısmı düzenleyin
-        console.log('data',response);
+        console.log('veriler',response.data);
+        name.value=response.data.data.name;
+        description.value=response.data.data.description;
+
       } catch (err) {
       }
     };
@@ -129,7 +136,8 @@ export default {
         "JAVA",
       ],
       getSkillsData,
-      
+      name,
+      description,
     };
   },
 };
