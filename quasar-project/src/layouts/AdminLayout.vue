@@ -45,7 +45,10 @@
         drawer: false,
         menuList: [
           { url: '/admin', label: 'Özgeçmiş', icon: 'home' },
-          { url: '/feature', label: 'Feature', icon: 'roundabout_right' },
+          { url: '/header', label: 'Header', icon: 'roundabout_right' },
+          { url: '/homepage1', label: 'Anasayfa-1', icon: 'home' },
+          { url: '/description', label: 'ANasayfa-Yorum', icon: 'home' },
+
         ]
       };
     },

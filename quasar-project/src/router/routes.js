@@ -8,10 +8,13 @@ const About = () => import('pages/About.vue');
 const Homepage = () => import('pages/homepage.vue');
 const Login = () => import('pages/login.vue');
 const cv = () => import('pages/admin/cv.vue');
-const feature = () => import('pages/FeaturePage.vue');
+const homepage1 = () => import('pages/admin/homepage1.vue');
+const Header = () => import('src/pages/Header.vue');
+const description = () => import('pages/admin/description.vue');
 const ErrorNotFound = () => import('pages/ErrorNotFound.vue');
 
 const routes= [
+ 
   {
     path: '/',
     component: MainLayout,
@@ -26,7 +29,10 @@ const routes= [
     component: AdminLayout,
     children: [
       { path: '/admin', component: cv },
-      { path: '/feature', component: feature },
+      { path: '/header', component: Header },
+      { path: '/homepage1', component: homepage1 },
+      { path: '/description', component: description },
+
 
     ],
   },

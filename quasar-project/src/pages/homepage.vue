@@ -1,5 +1,5 @@
 <template>
-  <div
+    <div
     class="background"
     style="font-family: Verdana, Geneva, Tahoma, sans-serif"
   >
@@ -14,10 +14,11 @@
     <div class="diagonal-box bg-one">
       <div class="content">
         <div class="row justify-center">
-          <div class="column" v-for="(value, index) in values" :key="index">
+          <div class="column" v-for="(value, index) in homepage1" :key="index">
+            
             <q-knob
               :step="9"
-              :value="value"
+              :value="value.circle"
               show-value
               size="90px"
               :thickness="0.22"
@@ -25,7 +26,7 @@
               track-color="lime-3"
               class="text-lime q-ma-md"
             />
-            <div class="text-center">{{ labels[index] }}</div>
+            <div class="text-center">{{ value.title }}</div>
           </div>
         </div>
       </div>
@@ -71,8 +72,6 @@
       <div class="content">
         <div class="social-icons">
           <div class="icon-container">
-            <!-- <i class="fa-brands fa-linkedin"></i>
-        <div class="icon-label">LinkedIn</div> -->
             <q-btn flat icon="fa-brands fa-linkedin" href="https://www.linkedin.com/in/sitran-%C3%A7elik-4810b3203/" size="30px"
             />
             <div class="icon-label">LinkedIn</div>
@@ -91,6 +90,8 @@
       </div>
     </div>
   </div>
+
+
 </template>
 
 <script>
@@ -100,8 +101,8 @@ import axios from 'axios';
 
 const name=ref('');
 const description=ref('');
+const homepage1=ref([]);
 
-// Verileri LocalStorage'a kaydet
     
 
 
@@ -109,14 +110,25 @@ export default {
   setup() {
      onMounted(async()=>{
       await getSkillsData();
+      await getHomePageData();
+
      })
     const getSkillsData = async () => {
       try {
         const response = await axios.get('http://localhost:5159/api/Admin/getfeature');
-        // Verilerin API'den nasıl geldiğine bağlı olarak bu kısmı düzenleyin
         console.log('veriler',response.data);
         name.value=response.data.data.name;
         description.value=response.data.data.description;
+
+      } catch (err) {
+      }
+    };
+    const getHomePageData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5159/api/Admin/gethomepage1');
+        console.log('veriler',response.data);
+        homepage1.value=response.data.data;
+
 
       } catch (err) {
       }
@@ -138,6 +150,7 @@ export default {
       getSkillsData,
       name,
       description,
+      getHomePageData, homepage1
     };
   },
 };
