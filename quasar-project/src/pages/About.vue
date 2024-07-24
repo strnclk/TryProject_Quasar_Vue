@@ -1,16 +1,16 @@
 <template>
     <div class="q-pa-md" style="font-family:Verdana, Geneva, Tahoma, sans-serif">
       <div class="text-h3" style="margin:2%;color:orange;">
-        HAKKIMDA
+        {{ title }}
       </div>
-      <p  style="margin-left: 2%;margin-right: 2%">Özgeçmişim ve çalışmalarıma aşağıdan ulaşabilirsiniz. Daha ayrıntılı bilgi almak, projelerimi incelemek ve profesyonel geçmişim hakkında daha fazla bilgi edinmek için LinkedIn veya GitHub hesabımı ziyaret edebilirsiniz.<br><br> LinkedIn profilimde kariyer yolculuğum, katıldığım projeler ve aldığım geri bildirimler hakkında detaylı bilgiler bulabilirsiniz. GitHub hesabımda ise kod örneklerim ve üzerinde çalıştığım açık kaynak projeleri keşfedebilirsiniz. </p>
+      <p  style="margin-left: 2%;margin-right: 2%">
+        {{ description }}   
+          </p>
       <div class="q-pa-md">
         <q-card class="my-card">
           <div >
     <q-parallax  :speed="$q.screen.lt.sm ? 0.1 : 2 +$q.screen.gt.sm && $q.screen.lt.md ? 0.1 : 2+ $q.screen.gt.md ? 0.5 : 2" :height="$q.screen.lt.sm ? 100 : +$q.screen.gt.sm && $q.screen.lt.md ? 100 : 200+ $q.screen.gt.md ? 200 : 200">
-      <template v-slot:media>
-        <img src="/icons/kod3.png" :style="$q.screen.gt.md ? '' : 'width:350px;'">
-      </template>
+     {{ParallaxImg}}
     </q-parallax>
   </div>
         </q-card>
@@ -23,8 +23,8 @@
         dense
         align="justify"
       >
-        <q-tab class="text-orange" name="mails" icon="mail" label="Özgeçmiş" />
-        <q-tab class="text-orange" name="alarms" icon="alarm" label="Projeler" />
+        {{ icon }}
+        {{title}}
       </q-tabs>
     </div>
   </div>
@@ -202,19 +202,69 @@ geliştirmemi sağladı
             </div>
         </div>
   </template>
-  
-  <script>
-import { ref } from 'vue'
+
+<script>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 export default {
-  setup () {
+  setup() {
+    const tab = ref('mails');
+    const title = ref('');
+    const description = ref('');
+    const ParallaxImg = ref('');
+    const icon = ref('');
+
+    const getSkillsData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5159/api/Admin/getabout');
+        console.log('veriler', response.data);
+        title.value = response.data.data.title;
+        description.value = response.data.data.description;
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      }
+    };
+    const getParallaxData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5159/api/Admin/getabout1');
+        console.log('veriler', response.data);
+        ParallaxImg.value = response.data.data.ParallaxImg;
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      }
+    };
+    const geticonData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5159/api/Admin/getabout2');
+        console.log('veriler', response.data);
+        icon.value = response.data.data.icon;
+        title.value = response.data.data.title;
+        
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      }
+    };
+
+
+    onMounted(async () => {
+      await getSkillsData();
+      await getParallaxData();
+      await geticonData();
+
+    });
+
     return {
-      tab: ref('mails'),
-    }
-  }
-}
+      tab,
+      title,
+      description,
+      ParallaxImg,
+    };
+  },
+};
+
 </script>
-  
+
   
   <style scoped>
   p {

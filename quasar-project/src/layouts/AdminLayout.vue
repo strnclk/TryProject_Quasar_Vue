@@ -48,6 +48,12 @@
           { url: '/header', label: 'Header', icon: 'roundabout_right' },
           { url: '/homepage1', label: 'Anasayfa-1', icon: 'home' },
           { url: '/description', label: 'ANasayfa-Yorum', icon: 'home' },
+          { url: '/yonlendirme', label: 'footer-yonlendirme', icon: 'home' },
+          { url: '/aboutadmin', label: 'About', icon: 'home' },
+          { url: '/parallax', label: 'Parallax', icon: 'home' },
+          { url: '/about2', label: 'Tab GÜncelleme ', icon: 'home' },
+
+
 
         ]
       };

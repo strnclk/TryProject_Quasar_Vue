@@ -45,13 +45,7 @@
             >
               <q-card-section>
                 <p>
-                  Yazılım geliştirme alanında çeşitli projelerde yer aldım ve
-                  her biri bana farklı deneyimler kazandırdı. E-ticaret
-                  siteleri, kurumsal web uygulamaları ve interaktif kullanıcı
-                  arayüzleri üzerinde çalıştım. Tailwind CSS kullanarak modern
-                  ve responsive tasarımlar oluşturdum, Vue.js ile dinamik web
-                  uygulamaları geliştirdim ve Django ile güçlü ve güvenli
-                  backend çözümleri sundum.
+                  {{ bannerdescriptionobje.description1}}
                 </p>
               </q-card-section>
 
@@ -59,8 +53,7 @@
 
               <q-card-section style="color: rgb(255, 128, 0)">
                 <p>
-                  Her projede, kullanıcı ihtiyaçlarını ve beklentilerini en iyi
-                  şekilde karşılayacak çözümler üretmeye odaklandım.
+                  {{bannerdescriptionobje.description2}}
                 </p>
               </q-card-section>
             </q-card-section>
@@ -69,26 +62,16 @@
       </div>
     </div>
     <div class="clip-path" id="contact">
-      <div class="content">
-        <div class="social-icons">
-          <div class="icon-container">
-            <q-btn flat icon="fa-brands fa-linkedin" href="https://www.linkedin.com/in/sitran-%C3%A7elik-4810b3203/" size="30px"
-            />
-            <div class="icon-label">LinkedIn</div>
-          </div>
-          <div class="icon-container">
-            <q-btn flat icon="fa-brands fa-github" href="https://github.com/strnclk" size="30px"
-            />
-            <div class="icon-label">Github</div>
-          </div>
-          <div class="icon-container">
-            <q-btn flat icon="fa-solid fa-envelope" href="mailto:sitran.celik@gmail.com" size="30px"
-            />
-            <div class="icon-label">Mail</div>
-          </div>
-        </div>
+  <div class="content">
+    <div class="social-icons">
+      <div class="icon-container" v-for="(item, index) in footer" :key="index">
+        <div>{{ item.title }}</div>
+        <div>{{ item.icon }}</div>
+        <div>{{ item.url }}</div>
       </div>
     </div>
+  </div>
+</div>
   </div>
 
 
@@ -102,6 +85,9 @@ import axios from 'axios';
 const name=ref('');
 const description=ref('');
 const homepage1=ref([]);
+const bannerdescriptionobje=ref({});
+const footer=ref([]);
+
 
     
 
@@ -111,6 +97,9 @@ export default {
      onMounted(async()=>{
       await getSkillsData();
       await getHomePageData();
+      await getDescriptionData();
+      await getFooterData();
+
 
      })
     const getSkillsData = async () => {
@@ -133,6 +122,26 @@ export default {
       } catch (err) {
       }
     };
+    const getDescriptionData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5159/api/Admin/getdescription');
+        console.log('veriler',response.data);
+        bannerdescriptionobje.value=response.data.data;
+
+
+      } catch (err) {
+      }
+    };
+    const getFooterData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5159/api/Admin/getfooter');
+        console.log('veriler',response.data);
+        footer.value=response.data.data;
+
+
+      } catch (err) {
+      }
+    };
     return {
       slide: ref(1),
       values: [30, 80, 80, 50, 50, 30, 70, 80, 40],
@@ -150,7 +159,11 @@ export default {
       getSkillsData,
       name,
       description,
-      getHomePageData, homepage1
+      getHomePageData, 
+      homepage1,
+      bannerdescriptionobje,
+      getDescriptionData,getFooterData,footer,
+
     };
   },
 };
